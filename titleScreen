@@ -17,7 +17,7 @@ white = (255, 255, 255)
 #CLOCK FOR REFRESH RATE OF THE SCREEN
 clock = pygame.time.Clock()
 
-#FUNCTION FOR SIMPLIFYING TEXT CREATOR  
+#FUNCTION FOR SIMPLIFYING TEXT CREATOR 
 def textCreator(textSize,textToDisplay,color,style = None):
 	titleTextFont = pygame.font.Font( style, textSize)
 	titleText= titleTextFont.render(textToDisplay,True,color)
@@ -164,14 +164,13 @@ def gameStart():
 					missClicks = missClicks + 1
 					width_of_circle = 30
 					missText = textCreator(60,'MISS : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
-					display.blit(missText,(screen_width/2.6,10))
 					pygame.draw.circle(display, white, (cx, cy), width_of_circle)
 					pygame.display.update()
 
 		scoreFontText = textCreator(60, 'SCORE : ' + str(scoreOfGame), white, style = 'font/ChakraPetch-Bold.ttf')
 		display.blit(scoreFontText,(10,10))
 		missText = textCreator(60,'MISS : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
-		display.blit(missText,(screen_width/2.6,10))
+		display.blit(missText,(screen_width/2.4,10))
 		
 		#THIS IF BLOCK IS USED TO CHECK THE CLICKS OF THE CIRCLES
 		if math.sqrt(sqx + sqy) < width_of_circle and click[0] == 1:
@@ -194,8 +193,8 @@ def gameStart():
 		if missClicks >= 5:
 			scoreScreen(scoreOfGame,missClicks)
 			gameRunning = False
-		pygame.display.update()
 		
+		pygame.display.update()
 		clock.tick(120)
 
 #FUNCTION FOR PAUSE MENU
