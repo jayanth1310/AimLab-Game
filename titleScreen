@@ -130,8 +130,8 @@ def gameStart():
 	
 	#MISS TEXT
 	global missClicks
-	missClicks = 0
-	missText = textCreator(60,'MISS : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
+	missClicks = 5
+	missText = textCreator(40,'MISSES LEFT : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
 	
 	#PAUSE BUTTON IN THE GAME SCREEN
 	pause_Button = button.Button(screen_width - 220,10,textCreator(60,'PAUSE',white, style = 'font/ChakraPetch-Bold.ttf'))
@@ -158,19 +158,19 @@ def gameStart():
 						display.blit(backgroundDisplay,(0,0))
 						pygame.draw.circle(display, white, (cx, cy), width_of_circle)
 			#THIS IF BLOCK IS USED TO CHECK THE MISSES OF THE PLAYER 			
-			if not(math.sqrt(sqx + sqy) < width_of_circle):	
+			if not(math.sqrt(sqx + sqy) < width_of_circle) :	
 				if event.type == pygame.MOUSEBUTTONDOWN :
 					display.blit(backgroundDisplay,(0,0))
-					missClicks = missClicks + 1
+					missClicks = missClicks - 1
 					width_of_circle = 30
-					missText = textCreator(60,'MISS : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
+					missText = textCreator(45,'MISSES LEFT : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
 					pygame.draw.circle(display, white, (cx, cy), width_of_circle)
 					pygame.display.update()
 
 		scoreFontText = textCreator(60, 'SCORE : ' + str(scoreOfGame), white, style = 'font/ChakraPetch-Bold.ttf')
 		display.blit(scoreFontText,(10,10))
-		missText = textCreator(60,'MISS : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
-		display.blit(missText,(screen_width/2.4,10))
+		missText = textCreator(45,'MISSES LEFT : '+str(missClicks),white,style = 'font/ChakraPetch-Bold.ttf')
+		display.blit(missText,(screen_width/2.6,20))
 		
 		#THIS IF BLOCK IS USED TO CHECK THE CLICKS OF THE CIRCLES
 		if math.sqrt(sqx + sqy) < width_of_circle and click[0] == 1:
@@ -182,7 +182,8 @@ def gameStart():
 			pygame.draw.circle(display, white, (cx, cy), width_of_circle)
 
 		if pause_Button.display(display):
-			missClicks = missClicks - 1
+			
+			missClicks = missClicks + 1
 			optionMenu()
 			if gameExit == 1:
 				gameRunning = False
@@ -190,7 +191,7 @@ def gameStart():
 				display.blit(backgroundDisplay,(0,0))
 				pygame.draw.circle(display, white, (cx, cy), width_of_circle)
 
-		if missClicks >= 5:
+		if missClicks <= 0:
 			scoreScreen(scoreOfGame,missClicks)
 			gameRunning = False
 		
@@ -308,8 +309,6 @@ def scoreScreen(score,miss):
 	aimlabDisplay = textCreator(80,'A I M L A B',white)
 	#SCORE DISPLAY
 	scoreDisplayText = textCreator(70,'SCORE : '+str(score),white)
-	#MISS DISPLAY
-	missDisplayText = textCreator(70,'MISS : '+str(miss),white)
 
 	scoreScreenRunning = True
 
@@ -322,7 +321,6 @@ def scoreScreen(score,miss):
 		scoreDisplay.blit(backgroundOfScoreScreen,(0,0))				
 		scoreDisplay.blit(aimlabDisplay,(screen_width/20,screen_height/9))
 		scoreDisplay.blit(scoreDisplayText,(screen_width/20,screen_height/4))
-		scoreDisplay.blit(missDisplayText,(screen_width/20,screen_height/3))
 		pygame.draw.line(scoreDisplay,white, (screen_width/20,screen_height/1.28), (screen_width/1.04,screen_height/1.28), 5)
 		if playAgainButton.display(scoreDisplay):
 			gameStart()
@@ -332,5 +330,6 @@ def scoreScreen(score,miss):
 		pygame.display.update()
 		clock.tick(120)
 
-mainScreen()
+#mainScreen()
+gameStart()
 pygame.quit()
